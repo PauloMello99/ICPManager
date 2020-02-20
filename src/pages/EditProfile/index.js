@@ -12,7 +12,7 @@ import translate from '~/languages';
 import {
     userProfile,
     universities as getUniversities,
-    setPhoto,
+    setProfilePhoto,
 } from '~/services/firebase';
 
 import AppBar from '~/components/Appbar';
@@ -116,23 +116,23 @@ export default function EditProfile({ navigation }) {
     };
 
     const saveProfile = async () => {
-        setSaving(true);
-
-        let url = null;
-        if (pictureBase64.current) {
-            await setPhoto(uid, pictureBase64.current)
-                .then(downloadUrl => {
-                    url = downloadUrl;
-                })
-                .catch(() =>
-                    showErrorSnackbar(
-                        translate('edit_profile_picture_failure'),
-                        1000
-                    )
-                );
-        }
-
         try {
+            setSaving(true);
+
+            let url = null;
+            if (pictureBase64.current) {
+                await setProfilePhoto(uid, pictureBase64.current)
+                    .then(downloadUrl => {
+                        url = downloadUrl;
+                    })
+                    .catch(() =>
+                        showErrorSnackbar(
+                            translate('edit_profile_picture_failure'),
+                            1000
+                        )
+                    );
+            }
+
             // lista de id de universidades
             const universityList = universities.map(un => un.id);
 

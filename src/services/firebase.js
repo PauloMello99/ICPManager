@@ -180,7 +180,34 @@ export function photo(uid) {
         .child(`${uid}.jpg`);
 }
 
-export async function setPhoto(uid, base64) {
+export async function setUniversityPhoto(id, base64) {
+    return new Promise((resolve, reject) => {
+        const task = firebase
+            .storage()
+            .ref('universities/')
+            .child(id)
+            .putString(base64, 'base64');
+        task.on(
+            'state_changed',
+            taskSnapshot => {
+                if (taskSnapshot.state === firebase.storage.TaskState.SUCCESS) {
+                    firebase
+                        .storage()
+                        .ref('universities/')
+                        .child(id)
+                        .getDownloadURL()
+                        .then(downloadURL => {
+                            resolve(downloadURL);
+                        })
+                        .catch(() => reject());
+                }
+            },
+            () => reject()
+        );
+    });
+}
+
+export async function setProfilePhoto(uid, base64) {
     return new Promise((resolve, reject) => {
         const task = firebase
             .storage()

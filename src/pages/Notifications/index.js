@@ -8,10 +8,12 @@ import NotificationList from './NotificationList';
 import { changeStatusBarColor } from '~/store/modules/ui/actions';
 import NavigationService from '~/navigation/NavigationService';
 import { notificationsRT } from '~/services/firebase';
+
 import UserDAO from '~/dao/UserDAO';
+import ProjectDAO from '~/dao/ProjectDAO';
+import UniversityDAO from '~/dao/UniversityDAO';
 
 import { Container, Header, Title, Loading } from './styles';
-import ProjectDAO from '~/dao/ProjectDAO';
 
 export default function Notifications() {
     const { uid, type } = useSelector(state => state.auth);
@@ -20,6 +22,7 @@ export default function Notifications() {
 
     const userDAO = new UserDAO();
     const projectDAO = new ProjectDAO();
+    const universityDAO = new UniversityDAO();
     const dispatch = useDispatch();
 
     useFocusEffect(
@@ -28,17 +31,37 @@ export default function Notifications() {
         }, [dispatch])
     );
 
-    const onInfoPress = (id, key) =>
-        NavigationService.navigate('Project', { id });
-
-    const onPositivePress = async (id, projectId, key) => {
+    const onInfoPress = item => {
+        const { id, key } = item;
         switch (key) {
             case 'PROJECT_INVITE': {
+                NavigationService.navigate('Project', { id });
+                break;
+            }
+            case 'PROJECT_ENABLE': {
+                NavigationService.navigate('Project', { id });
+                break;
+            }
+            default:
+        }
+    };
+
+    const onPositivePress = async item => {
+        const { key, id } = item;
+        switch (key) {
+            case 'PROJECT_INVITE': {
+                const { projectId } = item;
                 await projectDAO.acceptPendingRequest(projectId, uid, type);
                 break;
             }
             case 'PROJECT_ENABLE': {
+                const { projectId } = item;
                 await projectDAO.enable(projectId);
+                break;
+            }
+            case 'UNIVERSITY_ENABLE': {
+                const { universityId } = item;
+                await universityDAO.enable(universityId);
                 break;
             }
             default:
@@ -46,14 +69,22 @@ export default function Notifications() {
         await userDAO.removeNotification(uid, id);
     };
 
-    const onNegativePress = async (id, projectId, key) => {
+    const onNegativePress = async item => {
+        const { key, id } = item;
         switch (key) {
             case 'PROJECT_INVITE': {
+                const { projectId } = item;
                 await projectDAO.acceptPendingRequest(projectId, uid, type);
                 break;
             }
             case 'PROJECT_ENABLE': {
+                const { projectId } = item;
                 await projectDAO.remove(projectId);
+                break;
+            }
+            case 'UNIVERSITY_ENABLE': {
+                const { universityId } = item;
+                await universityDAO.remove(universityId);
                 break;
             }
             default:

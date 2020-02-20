@@ -134,11 +134,16 @@ export default {
     create_project_notification: {
         PROJECT_INVITE: 'You have been invited to participate in the project: ',
         PROJECT_ENABLE: 'A new project asks for acceptance: ',
+        UNIVERSITY_ENABLE: 'A new institution asks for acceptance: ',
     },
     notification_title: {
         PROJECT_INVITE: 'New Project',
         PROJECT_ENABLE: 'Enable Project',
+        UNIVERSITY_ENABLE: 'New Institution',
     },
+
+    create_university_success: 'Institution successfully created!',
+    create_university_failure: 'Failed to create institution',
 
     notifications_title: 'Notifications',
     notifications_empty_list: 'No notification yet.',

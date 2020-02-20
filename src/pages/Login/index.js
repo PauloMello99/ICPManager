@@ -142,7 +142,11 @@ export default function Login() {
                         </ResetPasswordText>
                     </LinkButton>
                 </Form>
-                <Modal isVisible={showModal} onDismiss={closeModal}>
+                <Modal
+                    isVisible={showModal}
+                    onDismiss={closeModal}
+                    maxHeight="30%"
+                >
                     <ModalInnerContainer>
                         <ModalTitleText>
                             {translate('login_recover_password')}

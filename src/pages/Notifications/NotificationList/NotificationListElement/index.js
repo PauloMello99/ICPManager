@@ -18,20 +18,20 @@ function NotificationListElement({
     onPosivitePress,
     onNegativePress,
 }) {
-    const { key, text, projectId, id } = item;
+    const { key, text } = item;
     const [enabled, setEnabled] = useState(true);
 
     const handlePositiveAction = () => {
         setEnabled(false);
-        onPosivitePress(id, projectId, key);
+        onPosivitePress(item);
     };
 
     const handleNegativeAction = () => {
         setEnabled(false);
-        onNegativePress(id, projectId, key);
+        onNegativePress(item);
     };
 
-    const handleInfoPress = () => onInfoPress(projectId, key);
+    const handleInfoPress = () => onInfoPress(item);
 
     return (
         <Container>
@@ -59,10 +59,8 @@ NotificationListElement.defaultProps = {
 
 NotificationListElement.propTypes = {
     item: PropTypes.shape({
-        id: PropTypes.string.isRequired,
         key: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
-        projectId: PropTypes.string.isRequired,
     }).isRequired,
     onInfoPress: PropTypes.func,
     onPosivitePress: PropTypes.func,

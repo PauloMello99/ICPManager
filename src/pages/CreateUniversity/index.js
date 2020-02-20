@@ -7,13 +7,17 @@ import * as Yup from 'yup';
 import ImagePicker from 'react-native-image-crop-picker';
 import translate from '~/languages';
 
+import { coordinators, setUniversityPhoto } from '~/services/firebase';
+
 import AppBar from '~/components/Appbar';
 import ProfilePicture from '~/components/ProfilePicture';
 import LoadingPicture from './LoadingPicture';
 
 import { changeStatusBarColor } from '~/store/modules/ui/actions';
-import { showErrorSnackbar } from '~/services/Snackbar';
+import { showErrorSnackbar, showSuccessSnackbar } from '~/services/Snackbar';
+
 import UniversityDAO from '~/dao/UniversityDAO';
+import UserDAO from '~/dao/UserDAO';
 
 import {
     Container,
@@ -57,8 +61,25 @@ export default function CreateUniversity({ navigation }) {
     const createInstituition = async () => {
         try {
             setSaving(true);
-            const dao = new UniversityDAO();
-            const id = await dao.generateKey();
+
+            const userDAO = new UserDAO();
+            const universityDAO = new UniversityDAO();
+            const id = await universityDAO.generateKey();
+
+            let url = null;
+            if (pictureBase64.current) {
+                await setUniversityPhoto(id, pictureBase64.current)
+                    .then(downloadUrl => {
+                        url = downloadUrl;
+                    })
+                    .catch(() =>
+                        showErrorSnackbar(
+                            translate('edit_profile_picture_failure'),
+                            1000
+                        )
+                    );
+            }
+
             const university = {
                 name,
                 acronym,
@@ -66,11 +87,37 @@ export default function CreateUniversity({ navigation }) {
                 state: unState,
                 enable: type === 'coordinator',
                 id,
+                picture: url,
             };
-            await dao.save(id, university);
+
+            if (type === 'professor') {
+                const coordNotification = {
+                    text: name,
+                    key: 'UNIVERSITY_ENABLE',
+                    universityId: id,
+                };
+                const res = await coordinators();
+                const allCoordinators = Object.values(res.val());
+
+                const coordResults = allCoordinators.map(async coord => {
+                    const notificationId = await userDAO.generateNotificationKey(
+                        coord.id
+                    );
+                    return userDAO.addNotification(coord.id, {
+                        ...coordNotification,
+                        id: notificationId,
+                    });
+                });
+                Promise.all(coordResults);
+            }
+
+            await universityDAO.save(id, university);
             setSaving(false);
+            navigation.goBack();
+            showSuccessSnackbar(translate('create_university_success'));
         } catch (err) {
             showErrorSnackbar(translate('create_university_failure'));
+            setSaving(false);
         }
     };
 
