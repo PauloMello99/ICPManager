@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { differenceInCalendarDays } from 'date-fns';
+import { differenceInCalendarDays, subDays } from 'date-fns';
 
 import {
     Container,
@@ -12,11 +12,11 @@ import {
 } from './styles';
 
 function PhaseListElement({ item, onPress }) {
-    const { title, description, endDate, startDate, id } = item;
-    const handlePress = () => onPress(id);
+    const { title, description, endDate, startDate } = item;
+    const handlePress = () => onPress(item);
 
     const today = new Date();
-    const start = new Date(startDate);
+    const start = subDays(new Date(startDate), 1);
     const end = new Date(endDate);
     const total = differenceInCalendarDays(end, start);
     const current = differenceInCalendarDays(today, start);

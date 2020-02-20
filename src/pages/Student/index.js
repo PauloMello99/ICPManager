@@ -11,12 +11,13 @@ import ProjectList from '~/components/ProjectList';
 import UniversityList from '~/components/UniversityList';
 
 import { changeStatusBarColor } from '~/store/modules/ui/actions';
+import { showErrorSnackbar } from '~/services/Snackbar';
+
 import {
     studentRT,
     universities as getUniversities,
     projects as getProjects,
 } from '~/services/firebase';
-import { showErrorSnackbar } from '~/services/Snackbar';
 
 import {
     Container,

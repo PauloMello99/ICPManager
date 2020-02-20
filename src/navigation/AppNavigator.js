@@ -16,6 +16,7 @@ import Search from '~/pages/Search';
 import Calendar from '~/pages/Calendar';
 import Notifications from '~/pages/Notifications';
 
+import University from '~/pages/University';
 import CreateUniversity from '~/pages/CreateUniversity';
 import Profile from '~/pages/Profile';
 import EditProfile from '~/pages/EditProfile';
@@ -172,6 +173,7 @@ const RootStack = createStackNavigator(
         Project,
         CreateProject,
         CreateUniversity,
+        University,
     },
     {
         initialRouteName: 'DashboardStack',

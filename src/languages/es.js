@@ -30,6 +30,7 @@ export default {
     students: 'Estudiantes',
     universities: 'Instituciones de Enseñanza',
     instituitions: 'Instituciones',
+    instituition: 'Institución',
     phases: 'Etapas',
     gender: 'Género',
     gender_male: 'Masculino',
@@ -160,9 +161,13 @@ export default {
     create_university_success: 'Institución creada con éxito!',
     create_university_failure: 'No se pudo crear la institución',
 
+    university_load_failure: 'No se pudo cargar la institución.',
+
     notifications_title: 'Notificaciones',
     notifications_empty_list: 'No hay notificación todavía.',
 
+    project_download_report: 'Descargar',
+    project_empty_report: 'No se enviaron informes.',
     project_send_new_invite_success: '¡Solicitudes enviadas con éxito!',
     project_edit_save_failure: 'No se pudo guardar la información.',
     project_edit_info_date_failure:

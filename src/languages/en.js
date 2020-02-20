@@ -28,6 +28,7 @@ export default {
     students: 'Students',
     universities: 'Teaching Institutions',
     instituitions: 'Institutions',
+    instituition: 'Institution',
     phases: 'Phases',
     gender: 'Gender',
     gender_male: 'Male',
@@ -145,9 +146,13 @@ export default {
     create_university_success: 'Institution successfully created!',
     create_university_failure: 'Failed to create institution',
 
+    university_load_failure: 'The institution could not be loaded.',
+
     notifications_title: 'Notifications',
     notifications_empty_list: 'No notification yet.',
 
+    project_download_report: 'Download',
+    project_empty_report: ' No report sent.',
     project_send_new_invite_success: 'Requests successfully sent!',
     project_edit_save_failure: 'Failed to save information.',
     project_edit_info_date_failure:

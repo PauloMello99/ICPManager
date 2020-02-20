@@ -8,9 +8,7 @@ import PhaseListElement from './PhaseListElement';
 
 import { Container, Separator } from './styles';
 
-export default function PhaseList({ list }) {
-    const onPress = () => {};
-
+export default function PhaseList({ list, onPress }) {
     const renderItem = ({ item }) => (
         <PhaseListElement item={item} onPress={onPress} />
     );
@@ -34,6 +32,10 @@ export default function PhaseList({ list }) {
     );
 }
 
+PhaseList.defaultProps = {
+    onPress: () => {},
+};
+
 PhaseList.propTypes = {
     list: PropTypes.arrayOf(
         PropTypes.shape({
@@ -44,4 +46,5 @@ PhaseList.propTypes = {
             id: PropTypes.string.isRequired,
         })
     ).isRequired,
+    onPress: PropTypes.func,
 };

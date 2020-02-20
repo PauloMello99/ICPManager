@@ -151,7 +151,7 @@ export function university(id) {
         .once('value');
 }
 
-export function universitiesRT(id, callback) {
+export function universityRT(id, callback) {
     return firebase
         .database()
         .ref('universities')
@@ -259,3 +259,17 @@ export function userProfileRT(type, id, callback) {
             return callback(null);
     }
 }
+
+export function phaseRT(projectId, phaseId, callback) {
+    return firebase
+        .database()
+        .ref('projects')
+        .child(projectId)
+        .child('phases')
+        .child(phaseId)
+        .on('value', callback);
+}
+
+// export function report(projectId, phaseId){
+//     return firebase.storage().ref('projects/').child(`${projectId}/`).child(phaseId).
+// }

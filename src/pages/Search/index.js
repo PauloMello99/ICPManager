@@ -12,6 +12,7 @@ import UniversityList from '~/components/UniversityList';
 import UserList from '~/components/UserList';
 
 import { Container, Header, Title, Input, Loading } from './styles';
+import NavigationService from '~/navigation/NavigationService';
 
 export default function Search() {
     const dispatch = useDispatch();
@@ -103,6 +104,9 @@ export default function Search() {
         setLoading(false);
     };
 
+    const goToUniversity = ({ id }) =>
+        NavigationService.navigate('University', { id });
+
     useEffect(() => {
         setLoading(true);
         setFilterText();
@@ -163,6 +167,7 @@ export default function Search() {
                         list={currentList}
                         refreshing={refreshing}
                         onRefresh={loadUniversities}
+                        onPress={goToUniversity}
                     />
                 );
             case 'professors':

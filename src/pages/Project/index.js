@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useFocusEffect } from 'react-navigation-hooks';
-import { differenceInCalendarDays } from 'date-fns';
+import { differenceInCalendarDays, subDays, differenceInDays } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import translate from '~/languages';
@@ -9,6 +9,7 @@ import TabView from './TabView';
 import FormModal from './FormModal';
 import MemberModal from './MemberModal';
 import PhaseModal from './PhaseModal';
+import ReportModal from './ReportModal';
 
 import AppBar from '~/components/Appbar';
 import UserList from '~/components/UserList';
@@ -58,6 +59,11 @@ export default function Project({ navigation }) {
     const [showEditMembers, setShowEditMembers] = useState(false);
     const [showEditProject, setShowEditProject] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
+    const [showReportModal, setShowReportModal] = useState(false);
+
+    const [hasAccess, setHasAccess] = useState(false);
+    const [phaseId, setPhaseId] = useState(null);
+    const [canSubmit, setCanSubmit] = useState(false);
 
     const [saving, setSaving] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -81,7 +87,16 @@ export default function Project({ navigation }) {
         ],
     });
 
-    const phaseContainer = <PhaseList list={phaseList} />;
+    const onPhasePress = item => {
+        if (hasAccess) {
+            setPhaseId(item.id);
+            setShowReportModal(true);
+        }
+    };
+
+    const phaseContainer = (
+        <PhaseList list={phaseList} onPress={onPhasePress} />
+    );
     const studentContainer = <UserList list={studentList} userType="student" />;
     const professorContainer = (
         <UserList list={professorList} userType="professor" />
@@ -151,13 +166,15 @@ export default function Project({ navigation }) {
                 } = snapshot.val();
 
                 const today = new Date();
-                const start = new Date(startDate);
+                const start = subDays(new Date(startDate), 1);
                 const end = new Date(endDate);
                 const total = differenceInCalendarDays(end, start);
                 const current = differenceInCalendarDays(today, start);
                 setProgress(current / total);
                 setInfo({ title, description, startDate, endDate });
                 setPhases(Object.values(phases));
+
+                setCanSubmit(type === 'student');
 
                 setStudentsId(students);
                 setProfessorsId(professors);
@@ -166,8 +183,16 @@ export default function Project({ navigation }) {
                 fetchProfessors(professors);
                 fetchStudents(students);
 
-                const isProjectMember = professors.find(prof => prof === uid);
-                if (isProjectMember || type === 'coordinator') {
+                const isProjectManager = professors.find(prof => prof === uid);
+                const isProjectMember = students.find(std => std === uid);
+
+                setHasAccess(
+                    isProjectMember ||
+                        isProjectManager ||
+                        type === 'coordinator'
+                );
+
+                if (isProjectManager || type === 'coordinator') {
                     setShowSettings(true);
                 }
 
@@ -279,6 +304,8 @@ export default function Project({ navigation }) {
             showErrorSnackbar(translate('project_edit_universities_failure'));
         }
     };
+
+    const dismissReport = () => setShowReportModal(false);
 
     const openEditInstituitions = () => setShowEdiInstituitions(true);
     const dismissEditInstituitions = () => setShowEdiInstituitions(false);
@@ -394,6 +421,13 @@ export default function Project({ navigation }) {
                         onDismiss={dismissEditInstituitions}
                         selected={universitiesId}
                         showModal={showEdiInstituitions}
+                    />
+                    <ReportModal
+                        showModal={showReportModal}
+                        onDismiss={dismissReport}
+                        phaseId={phaseId}
+                        projectId={id}
+                        canSubmit={canSubmit}
                     />
                     <SavingModal isVisible={saving} />
                 </Container>
