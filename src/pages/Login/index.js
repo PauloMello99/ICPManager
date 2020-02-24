@@ -99,7 +99,6 @@ export default function Login() {
                         icon="user"
                         value={email}
                         onChangeText={setEmail}
-                        keyboardType="email-address"
                         autoCorrect={false}
                         autoCapitalize="none"
                         returnKeyType="next"
@@ -153,7 +152,6 @@ export default function Login() {
                         </ModalTitleText>
                         <Input
                             icon="user"
-                            keyboardType="email-address"
                             autoCorrect={false}
                             autoCapitalize="none"
                             returnKeyType="send"
