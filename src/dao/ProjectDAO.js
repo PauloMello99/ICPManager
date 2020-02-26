@@ -92,26 +92,22 @@ export default class ProjectDAO {
     async acceptPendingRequest(id, uid, type) {
         try {
             const project = await this.reference.child(id).once('value');
-            const {
-                pendingList = [],
-                students = [],
-                professors = [],
-            } = project.val();
-            const index = pendingList.findIndex(pending => pending === uid);
-            if (index) {
-                if (type === 'student') {
+            const { students = [], professors = [] } = project.val();
+            if (type === 'student') {
+                if (students && !students.includes(uid)) {
                     students.push(uid);
                     await this.reference
                         .child(id)
                         .child('students')
                         .set(students);
-                } else {
-                    professors.push(uid);
-                    await this.reference
-                        .child(id)
-                        .child('professors')
-                        .set(professors);
+                    return true;
                 }
+            } else if (professors && !professors.includes(uid)) {
+                professors.push(uid);
+                await this.reference
+                    .child(id)
+                    .child('professors')
+                    .set(professors);
                 return true;
             }
             return false;

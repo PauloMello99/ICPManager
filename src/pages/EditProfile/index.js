@@ -43,8 +43,8 @@ import {
     ListContainer,
     PhotoIcon,
     ScrollContainer,
+    LoadingPicture,
 } from './styles';
-import LoadingPicture from './LoadingPicture';
 
 const profileSchema = Yup.object().shape({
     birthDate: Yup.date().max(subDays(new Date(), 1), translate('valid_date')),
@@ -277,8 +277,6 @@ export default function EditProfile({ navigation }) {
                             icon="user"
                             value={name}
                             onChangeText={setName}
-                            keyboardType="email-address"
-                            autoCorrect={false}
                             returnKeyType="next"
                             blurOnSubmit={false}
                             editable={!saving}
@@ -291,8 +289,6 @@ export default function EditProfile({ navigation }) {
                             icon="facebook-f"
                             value={facebook}
                             onChangeText={setFacebook}
-                            keyboardType="email-address"
-                            autoCorrect={false}
                             returnKeyType="next"
                             blurOnSubmit={false}
                             editable={!saving}
@@ -305,8 +301,6 @@ export default function EditProfile({ navigation }) {
                             icon="skype"
                             value={skype}
                             onChangeText={setSkype}
-                            keyboardType="email-address"
-                            autoCorrect={false}
                             returnKeyType="next"
                             blurOnSubmit={false}
                             editable={!saving}
@@ -335,8 +329,6 @@ export default function EditProfile({ navigation }) {
                                 icon="user"
                                 value={degree}
                                 onChangeText={setDegree}
-                                keyboardType="email-address"
-                                autoCorrect={false}
                                 returnKeyType="none"
                                 multiline
                                 numberOfLines={3}
@@ -353,8 +345,6 @@ export default function EditProfile({ navigation }) {
                                 icon="user"
                                 value={bio}
                                 onChangeText={setBio}
-                                keyboardType="email-address"
-                                autoCorrect={false}
                                 returnKeyType="none"
                                 multiline
                                 numberOfLines={3}

@@ -96,10 +96,9 @@ export default function Login() {
                 <Logo />
                 <Form>
                     <Input
-                        icon="user"
+                        icon="envelope"
                         value={email}
                         onChangeText={setEmail}
-                        keyboardType="email-address"
                         autoCorrect={false}
                         autoCapitalize="none"
                         returnKeyType="next"
@@ -152,8 +151,7 @@ export default function Login() {
                             {translate('login_recover_password')}
                         </ModalTitleText>
                         <Input
-                            icon="user"
-                            keyboardType="email-address"
+                            icon="envelope"
                             autoCorrect={false}
                             autoCapitalize="none"
                             returnKeyType="send"

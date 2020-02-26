@@ -76,6 +76,8 @@ export default {
     projects_projects: 'Proyectos',
     projects_my_projects: 'Mis Projetos',
     projects_view_project_failure: 'Error al abrir proyecto.',
+    projects_new_project_error:
+        'Debe registrar su participación en al menos una institución educativa para continuar.',
 
     search_select_category: 'Seleccione una categoria...',
     search: 'Buscar',

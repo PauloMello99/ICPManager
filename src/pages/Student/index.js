@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { format } from 'date-fns';
 import translate from '~/languages';
 
-import TabView from './TabView';
+import TabView from '~/components/TabView';
 import AppBar from '~/components/Appbar';
 import ProjectList from '~/components/ProjectList';
 import UniversityList from '~/components/UniversityList';

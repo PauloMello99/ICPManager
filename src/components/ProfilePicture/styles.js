@@ -6,6 +6,8 @@ export const Container = styled.View`
     height: ${props => (props.small ? '50px' : '100px')};
     margin: 8px 0px;
     border-radius: 50px;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const RoundImage = styled(FastImage).attrs({
@@ -17,3 +19,7 @@ export const RoundImage = styled(FastImage).attrs({
     border-radius: 50px;
     background-color: #eee;
 `;
+
+export const Loading = styled.ActivityIndicator.attrs(props => {
+    return { size: props.small ? 40 : 90 };
+})``;

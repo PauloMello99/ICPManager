@@ -6,13 +6,13 @@ import translate from '~/languages';
 import { professors, students, universities } from '~/services/firebase';
 
 import { changeStatusBarColor } from '~/store/modules/ui/actions';
+import NavigationService from '~/navigation/NavigationService';
 
 import Picker from '~/components/Picker';
 import UniversityList from '~/components/UniversityList';
 import UserList from '~/components/UserList';
 
-import { Container, Header, Title, Input, Loading } from './styles';
-import NavigationService from '~/navigation/NavigationService';
+import { Container, Header, Title, Input, Loading, AddButton } from './styles';
 
 export default function Search() {
     const dispatch = useDispatch();
@@ -30,7 +30,6 @@ export default function Search() {
     const filter = useCallback(
         text => {
             setFilterText(text);
-
             if (selected === 'universities') {
                 const filtered = universityList.filter(project => {
                     const { name, state, country } = project;
@@ -104,8 +103,53 @@ export default function Search() {
         setLoading(false);
     };
 
+    const onAddUniversity = () =>
+        NavigationService.navigate('CreateUniversity');
+
     const goToUniversity = ({ id }) =>
         NavigationService.navigate('University', { id });
+
+    const List = useCallback(() => {
+        if (!selected) {
+            return null;
+        }
+        if (refreshing) {
+            setRefreshing(false);
+        }
+        switch (selected) {
+            case 'universities':
+                return (
+                    <UniversityList
+                        list={currentList}
+                        refreshing={refreshing}
+                        onRefresh={loadUniversities}
+                        onPress={goToUniversity}
+                    />
+                );
+            case 'professors':
+                return (
+                    <UserList
+                        userType="professor"
+                        list={currentList}
+                        refreshing={refreshing}
+                        onRefresh={loadProfessors}
+                        goToProfile
+                    />
+                );
+            case 'students':
+                return (
+                    <UserList
+                        userType="student"
+                        list={currentList}
+                        refreshing={refreshing}
+                        onRefresh={loadStudents}
+                        goToProfile
+                    />
+                );
+            default:
+                return null;
+        }
+    }, [currentList, refreshing, selected]);
 
     useEffect(() => {
         setLoading(true);
@@ -153,48 +197,6 @@ export default function Search() {
         }, [dispatch])
     );
 
-    const List = useCallback(() => {
-        if (!selected) {
-            return null;
-        }
-        if (refreshing) {
-            setRefreshing(false);
-        }
-        switch (selected) {
-            case 'universities':
-                return (
-                    <UniversityList
-                        list={currentList}
-                        refreshing={refreshing}
-                        onRefresh={loadUniversities}
-                        onPress={goToUniversity}
-                    />
-                );
-            case 'professors':
-                return (
-                    <UserList
-                        userType="professor"
-                        list={currentList}
-                        refreshing={refreshing}
-                        onRefresh={loadProfessors}
-                        goToProfile
-                    />
-                );
-            case 'students':
-                return (
-                    <UserList
-                        userType="student"
-                        list={currentList}
-                        refreshing={refreshing}
-                        onRefresh={loadStudents}
-                        goToProfile
-                    />
-                );
-            default:
-                return null;
-        }
-    }, [currentList, refreshing, selected]);
-
     return (
         <Container>
             <Header>
@@ -221,6 +223,9 @@ export default function Search() {
                 />
             </Header>
             {loading ? <Loading /> : <List />}
+            {!loading && selected === 'universities' && (
+                <AddButton onPress={onAddUniversity} />
+            )}
         </Container>
     );
 }

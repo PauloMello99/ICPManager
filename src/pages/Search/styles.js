@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import ActionButton from 'react-native-action-button';
 import CustomInput from '~/components/Input';
 
 export const Container = styled.View`
@@ -34,3 +35,9 @@ export const Loading = styled.ActivityIndicator.attrs({
     align-self: center;
     margin-top: 40px;
 `;
+
+export const AddButton = styled(ActionButton).attrs({
+    buttonColor: 'rgba(1, 70, 59, 1)',
+    offsetX: 15,
+    offsetY: 15,
+})``;

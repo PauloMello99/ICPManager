@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useFocusEffect } from 'react-navigation-hooks';
 
 import translate from '~/languages';
+import { showErrorSnackbar } from '~/services/Snackbar';
 import { projects as getProjects } from '~/services/firebase';
 import NavigationService from '~/navigation/NavigationService';
 import { changeStatusBarColor } from '~/store/modules/ui/actions';
@@ -24,7 +25,7 @@ import {
 } from './styles';
 
 export default function Projects() {
-    const { uid, type } = useSelector(state => state.auth);
+    const { uid, type, universityList } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
     const [refreshing, setRefreshing] = useState(false);
@@ -38,7 +39,13 @@ export default function Projects() {
     const [currentList, setCurrentList] = useState([]);
 
     const onPress = id => NavigationService.navigate('Project', { id });
-    const onAddProject = () => NavigationService.navigate('CreateProject');
+    const onAddProject = () => {
+        if (type === 'professor' && !universityList.length) {
+            showErrorSnackbar(translate('projects_new_project_error'));
+            return;
+        }
+        NavigationService.navigate('CreateProject');
+    };
 
     const resetFilter = () => {
         setFilterText();

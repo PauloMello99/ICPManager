@@ -147,7 +147,6 @@ export default function UserForm({
                 value={filterText}
                 onChangeText={filter}
                 keyboardType="email-address"
-                autoCorrect={false}
                 returnKeyType="next"
                 blurOnSubmit={false}
                 editable={!loading}

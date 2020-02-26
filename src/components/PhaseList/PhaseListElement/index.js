@@ -6,9 +6,9 @@ import {
     Container,
     Description,
     EndIcon,
-    ProgressBar,
     Title,
     RowContainer,
+    ProgressBar,
 } from './styles';
 
 function PhaseListElement({ item, onPress }) {
@@ -27,7 +27,7 @@ function PhaseListElement({ item, onPress }) {
             <Title>{title}</Title>
             <Description>{description}</Description>
             <RowContainer>
-                <ProgressBar progress={progress} />
+                <ProgressBar progress={progress} width={null} />
                 <EndIcon />
             </RowContainer>
         </Container>

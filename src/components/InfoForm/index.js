@@ -75,7 +75,6 @@ export default function InfoForm({
                 value={title}
                 onChangeText={setTitle}
                 keyboardType="email-address"
-                autoCorrect={false}
                 returnKeyType="next"
                 blurOnSubmit={false}
                 editable
@@ -89,7 +88,6 @@ export default function InfoForm({
                 value={description}
                 onChangeText={setDescription}
                 keyboardType="email-address"
-                autoCorrect={false}
                 returnKeyType="none"
                 multiline
                 numberOfLines={3}
