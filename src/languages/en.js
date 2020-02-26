@@ -71,6 +71,8 @@ export default {
     projects_projects: 'Projects',
     projects_my_projects: 'My Projects',
     projects_view_project_failure: 'Failed to load project.',
+    projects_new_project_error:
+        'You must register your participation with at least one educational institution to proceed.',
 
     empty_list_phase: 'No phases to be listed.',
     empty_list_project: 'No projects to be listed.',

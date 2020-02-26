@@ -2,7 +2,7 @@ import React, { useCallback, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from 'react-navigation-hooks';
-import { differenceInDays, subDays } from 'date-fns';
+import { differenceInDays } from 'date-fns';
 import * as Yup from 'yup';
 import translate from '~/languages';
 
@@ -39,12 +39,12 @@ import {
 } from './styles';
 
 const firstStepSchema = Yup.object().shape({
-    endDate: Yup.date()
-        .min(new Date(), translate('create_project_valid_end'))
-        .required(translate('create_project_require_end_project')),
-    startDate: Yup.date()
-        .min(subDays(new Date(), 1), translate('create_project_valid_start'))
-        .required(translate('create_project_require_start_project')),
+    endDate: Yup.date().required(
+        translate('create_project_require_end_project')
+    ),
+    startDate: Yup.date().required(
+        translate('create_project_require_start_project')
+    ),
     description: Yup.string().required(
         translate('create_project_require_desc_project')
     ),
@@ -113,18 +113,20 @@ export default function CreateProject({ navigation }) {
         thirdStepSchema
             .validate(projectObj)
             .then(() => {
-                const found =
-                    universityList &&
-                    universityList.find(un =>
-                        projectObj.universities.find(sel => un === sel)
-                    );
-                if (!found) {
-                    showErrorSnackbar(
-                        translate(
-                            'create_project_require_current_user_universities'
-                        )
-                    );
-                    return;
+                if (type === 'professor') {
+                    const found =
+                        universityList &&
+                        universityList.find(un =>
+                            projectObj.universities.find(sel => un === sel)
+                        );
+                    if (!found) {
+                        showErrorSnackbar(
+                            translate(
+                                'create_project_require_current_user_universities'
+                            )
+                        );
+                        return;
+                    }
                 }
                 setIndex(3);
                 setTitle(translate('create_project_title.3'));

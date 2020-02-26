@@ -70,6 +70,8 @@ export default {
     projects_projects: 'Projetos',
     projects_my_projects: 'Meus Projetos',
     projects_view_project_failure: 'Falha ao abrir projeto.',
+    projects_new_project_error:
+        'É necessário registrar sua participação em ao menos uma instituição de ensino para prosseguir.',
 
     search: 'Pesquisar',
     search_select_category: 'Selecione uma categoria...',

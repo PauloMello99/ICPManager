@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import Ripple from 'react-native-material-ripple';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Bar } from 'react-native-progress';
+import DefaultBar from '~/components/ProgressBar';
 
 export const RowContainer = styled.View`
     flex-direction: row;
@@ -31,19 +31,12 @@ export const Description = styled.Text.attrs({
     color: #6d6e71;
 `;
 
-export const ProgressBar = styled(Bar).attrs({
-    useNativeDriver: true,
-    borderColor: '#ccc',
-    color: '#309500',
-    width: 270,
-    animated: true,
-})`
-    flex: 0.9;
-    width: 10px;
-`;
-
 export const EndIcon = styled(Icon).attrs({
     name: 'clock-end',
     size: 25,
     color: '#cc6060',
 })``;
+
+export const ProgressBar = styled(DefaultBar)`
+    margin-left: 0;
+`;

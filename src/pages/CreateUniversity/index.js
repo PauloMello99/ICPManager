@@ -11,7 +11,6 @@ import { coordinators, setUniversityPhoto } from '~/services/firebase';
 
 import AppBar from '~/components/Appbar';
 import ProfilePicture from '~/components/ProfilePicture';
-import LoadingPicture from './LoadingPicture';
 
 import { changeStatusBarColor } from '~/store/modules/ui/actions';
 import { showErrorSnackbar, showSuccessSnackbar } from '~/services/Snackbar';
@@ -27,6 +26,7 @@ import {
     PhotoIcon,
     Input,
     SubmitButton,
+    Loading,
 } from './styles';
 
 const universitySchema = Yup.object().shape({
@@ -165,7 +165,7 @@ export default function CreateUniversity({ navigation }) {
             <ScrollContainer>
                 <InnerContainer>
                     {loadingPicture ? (
-                        <LoadingPicture />
+                        <Loading />
                     ) : (
                         <ProfilePicture source={picture} />
                     )}
@@ -177,7 +177,6 @@ export default function CreateUniversity({ navigation }) {
                         value={name}
                         onChangeText={setName}
                         keyboardType="email-address"
-                        autoCorrect={false}
                         returnKeyType="next"
                         blurOnSubmit={false}
                         editable={!saving}
@@ -191,7 +190,6 @@ export default function CreateUniversity({ navigation }) {
                         value={acronym}
                         onChangeText={setAcronym}
                         keyboardType="email-address"
-                        autoCorrect={false}
                         returnKeyType="next"
                         blurOnSubmit={false}
                         editable={!saving}
@@ -205,7 +203,6 @@ export default function CreateUniversity({ navigation }) {
                         value={country}
                         onChangeText={setCountry}
                         keyboardType="email-address"
-                        autoCorrect={false}
                         returnKeyType="next"
                         blurOnSubmit={false}
                         editable={!saving}
@@ -219,7 +216,6 @@ export default function CreateUniversity({ navigation }) {
                         value={unState}
                         onChangeText={setUnState}
                         keyboardType="email-address"
-                        autoCorrect={false}
                         returnKeyType="send"
                         blurOnSubmit={false}
                         editable={!saving}

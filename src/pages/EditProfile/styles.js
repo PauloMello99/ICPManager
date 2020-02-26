@@ -82,3 +82,7 @@ export const IconContainer = styled(Ripple).attrs({
     margin: 0px 10px;
     padding: 10px 10px;
 `;
+
+export const LoadingPicture = styled.ActivityIndicator.attrs({
+    size: 40,
+})``;

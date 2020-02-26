@@ -11,7 +11,12 @@ export default function TabView({
 }) {
     return (
         <TabViewContainer
-            renderTabBar={props => <TabBarContainer {...props} />}
+            renderTabBar={props => (
+                <TabBarContainer
+                    tabCount={navigationState.routes.length}
+                    {...props}
+                />
+            )}
             navigationState={navigationState}
             renderScene={renderScene}
             onIndexChange={onIndexChange}

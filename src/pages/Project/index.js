@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useFocusEffect } from 'react-navigation-hooks';
-import { differenceInCalendarDays, subDays, differenceInDays } from 'date-fns';
+import { differenceInCalendarDays, subDays } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import translate from '~/languages';
 
-import TabView from './TabView';
+import TabView from '~/components/TabView';
 import FormModal from './FormModal';
 import MemberModal from './MemberModal';
 import PhaseModal from './PhaseModal';
@@ -16,6 +16,7 @@ import UserList from '~/components/UserList';
 import PhaseList from '~/components/PhaseList';
 import SavingModal from '~/components/SavingModal';
 import UniversityModal from '~/components/UniversityModal';
+import ProgressBar from '~/components/ProgressBar';
 
 import ProjectDAO from '~/dao/ProjectDAO';
 import UserDAO from '~/dao/UserDAO';
@@ -37,7 +38,6 @@ import {
     ProgressContainer,
     StartIcon,
     EndIcon,
-    ProgressBar,
     Loading,
     Separator,
     ActionButton,
@@ -47,6 +47,7 @@ import {
     EditProjectIcon,
     EditInstituitionsIcon,
 } from './styles';
+import NavigationService from '~/navigation/NavigationService';
 
 export default function Project({ navigation }) {
     const { uid, type } = useSelector(state => state.auth);

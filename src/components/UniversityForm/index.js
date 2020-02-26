@@ -92,7 +92,6 @@ export default function UniversityForm({ onInfoChange, initialValue = [] }) {
                 value={filterText}
                 onChangeText={filter}
                 keyboardType="email-address"
-                autoCorrect={false}
                 returnKeyType="next"
                 blurOnSubmit={false}
                 editable={!loading}

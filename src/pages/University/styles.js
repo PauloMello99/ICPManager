@@ -50,7 +50,7 @@ export const UniversityPicture = styled(FastImage).attrs({
     resizeMode: 'cover',
 })`
     width: 100%;
-    height: ${Dimensions.get('window').height * 0.3};
+    height: ${`${Dimensions.get('window').height * 0.3}px`};
     background: #ddd;
     margin-bottom: 20px;
 `;

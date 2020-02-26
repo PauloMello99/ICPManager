@@ -34,6 +34,9 @@ export default function Register({ navigation }) {
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
 
+    const [hidePassword, setHidePassword] = useState(true);
+    const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
+
     const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -80,6 +83,8 @@ export default function Register({ navigation }) {
             .catch(() => showErrorSnackbar(translate('register_failure')));
 
     const onSubmit = async () => {
+        setHideConfirmPassword(true);
+        setHidePassword(true);
         await registerSchema
             .validate({ name, email, password, passwordConfirm, type })
             .then(async () => {
@@ -99,6 +104,10 @@ export default function Register({ navigation }) {
         { value: 'professor', label: translate('professor') },
     ];
 
+    const handleHidePassword = () => setHidePassword(!hidePassword);
+    const handleHideConfirmPassword = () =>
+        setHideConfirmPassword(!hideConfirmPassword);
+
     return (
         <Container>
             <AppBar
@@ -111,7 +120,6 @@ export default function Register({ navigation }) {
                     value={name}
                     onChangeText={setName}
                     keyboardType="email-address"
-                    autoCorrect={false}
                     returnKeyType="next"
                     blurOnSubmit={false}
                     editable={!loading}
@@ -146,8 +154,12 @@ export default function Register({ navigation }) {
                     editable={!loading}
                     selectTextOnFocus={!loading}
                     onSubmitEditing={onPasswordSubmit}
-                    secureTextEntry
                     placeholder={translate('password')}
+                    secureTextEntry={hidePassword}
+                    onButtonPress={handleHidePassword}
+                    buttonTitle={
+                        hidePassword ? translate('show') : translate('hide')
+                    }
                 />
                 <Input
                     ref={passwordConfirmRef}
@@ -161,7 +173,13 @@ export default function Register({ navigation }) {
                     editable={!loading}
                     selectTextOnFocus={!loading}
                     onSubmitEditing={Keyboard.dismiss}
-                    secureTextEntry
+                    secureTextEntry={hideConfirmPassword}
+                    onButtonPress={handleHideConfirmPassword}
+                    buttonTitle={
+                        hideConfirmPassword
+                            ? translate('show')
+                            : translate('hide')
+                    }
                     placeholder={translate('register_confirm_password')}
                 />
                 <Picker

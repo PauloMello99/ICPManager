@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
 import PropTypes from 'prop-types';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import Thumbnail from '~/assets/user_thumbnail.png';
 
-import { Container, RoundImage } from './styles';
+import { Container, RoundImage, Loading } from './styles';
 
 export default function ProfilePicture({ source, small }) {
     const [loading, setLoading] = useState(true);
     const [imageSource, setImageSource] = useState(source);
 
     const onLoad = () => setLoading(false);
-    const onError = () => setImageSource(Thumbnail);
+    const onError = () => {
+        setImageSource(Thumbnail);
+        setLoading(false);
+    };
 
     useEffect(() => {
         if (source !== imageSource) {
@@ -22,17 +23,7 @@ export default function ProfilePicture({ source, small }) {
 
     return (
         <Container small={small}>
-            {loading && (
-                <SkeletonPlaceholder>
-                    <View
-                        style={{
-                            width: small ? 50 : 100,
-                            height: small ? 50 : 100,
-                            borderRadius: 50,
-                        }}
-                    />
-                </SkeletonPlaceholder>
-            )}
+            {loading && <Loading small={small} />}
             <RoundImage
                 source={source ? { uri: imageSource } : Thumbnail}
                 onLoad={onLoad}

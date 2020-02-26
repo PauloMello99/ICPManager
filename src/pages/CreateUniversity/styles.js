@@ -51,3 +51,7 @@ export const SubmitButton = styled(Button)`
     width: 100%;
     margin: 15px 0px;
 `;
+
+export const Loading = styled.ActivityIndicator.attrs({
+    size: 40,
+})``;

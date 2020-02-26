@@ -5,6 +5,7 @@ import translate from '~/languages';
 
 import Button from '~/components/Button';
 import ProfilePicture from '~/components/ProfilePicture';
+import SettingsList from './SettingsList';
 
 import { signOut, syncData } from '~/store/modules/auth/actions';
 import NavigationService from '~/navigation/NavigationService';
@@ -23,7 +24,6 @@ import {
     IconContainer,
     InnerContainer,
 } from './styles';
-import SettingsList from './SettingsList';
 
 export default function Profile() {
     const dispatch = useDispatch();

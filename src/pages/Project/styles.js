@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DefaultActionButton from 'react-native-action-button';
-import { Bar } from 'react-native-progress';
 import DefaultButton from '~/components/Button';
 
 export const Container = styled.View`
@@ -55,17 +54,6 @@ export const ProgressContainer = styled.View`
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-`;
-
-export const ProgressBar = styled(Bar).attrs({
-    useNativeDriver: true,
-    borderColor: '#ccc',
-    color: '#309500',
-    width: 202,
-    animated: true,
-})`
-    flex: 0.8;
-    width: 10px;
 `;
 
 export const StartIcon = styled(Icon).attrs({
