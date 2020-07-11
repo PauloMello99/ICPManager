@@ -39,10 +39,18 @@ export default function Projects() {
     const [currentList, setCurrentList] = useState([]);
 
     const onPress = id => NavigationService.navigate('Project', { id });
+
     const onAddProject = () => {
-        if (type === 'professor' && !universityList.length) {
-            showErrorSnackbar(translate('projects_new_project_error'));
-            return;
+        if (type === 'professor') {
+            if(!universityList){
+                showErrorSnackbar(translate('projects_new_project_error'));
+                return;
+            }
+            if(universityList.length === 0){
+                showErrorSnackbar(translate('projects_new_project_error'));
+                return;
+            }
+           
         }
         NavigationService.navigate('CreateProject');
     };
